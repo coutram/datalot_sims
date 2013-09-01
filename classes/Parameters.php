@@ -36,6 +36,20 @@ class Parameters  {
     }
   } 
 
+  public function getIterations() { 
+    return $this->iterations;
+  }
 
+  public function getYears(){ 
+    return $this->years;
+  }
+
+  public function getSpecies() { 
+    return $this->species;
+  }
+
+  public function getHabitats(){ 
+    return $this->habitats;
+  }
 
 }

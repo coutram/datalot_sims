@@ -13,5 +13,5 @@ $import_array = $import->getImportVars();
 $simulation = new Simulation(); 
 $simulation->setImportVars($import_array);
 $simulation->setParameters();
-$simulation->runSimulation(); 
+$simulation->runIterations(); 
 

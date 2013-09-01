@@ -1,6 +1,6 @@
 <?php 
 
-class Simulation extends SimulationRules { 
+class Simulation { 
 
   private $import_array; 
 
@@ -16,8 +16,33 @@ class Simulation extends SimulationRules {
     $this->parameters = new Parameters($this->import_array); 
   }
 
-  public function runSimulation() { 
-    print_r($this->parameters);
+  public function runIterations() {
+    $iterations = $this->parameters->getIterations();
+    for ($i=1;$i<=$iterations;$i++) { 
+      Log::instance()->output("Running $i Iteration");
+ 
+      foreach ($this->parameters->getSpecies() as $sp){ 
+        Log::instance()->output("Running for ".$sp->name);
+
+        foreach ($this->parameters->getHabitats() as $hab) { 
+          Log::instance()->output("Running for ".$hab->name);
+
+          $this->runSimulation($sp, $hab);
+        }
+      }
+    }
+  }
+
+  private function runSimulation($sp, $hab) {
+   $sim_env = new SimEnv($hab, $this->parameters->getYears());
+    while($sim_env->next()) { 
+      $sim_env->setWeather();
+
+      Log::instance()->output("");
+      Log::instance()->output("");
+    }
+
+
   }
 
 }
