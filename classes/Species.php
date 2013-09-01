@@ -1,7 +1,7 @@
 <?php 
-
 /**
- * 
+ * The Species Object
+ * Example for the form of the data after parsing the YAML file
  *   array(2) {
  *     ["name"]=>
  *     string(4) "bear"

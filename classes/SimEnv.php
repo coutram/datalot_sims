@@ -39,8 +39,6 @@ class SimEnv extends SimTime {
 
     $change = ($degrees_delta) - $rand_val; 
     $this->temp =  $avg_temp+$change;
-   
-
 
     Log::instance()->debug("avg temp: $avg_temp");
     Log::instance()->debug("degrees delta: $degrees_delta");

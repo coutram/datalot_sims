@@ -10,8 +10,8 @@ $import->setFilename("config.txt");
 $import->runImport(); 
 
 $import_array = $import->getImportVars(); 
-$simulation = new Simulation(); 
-$simulation->setImportVars($import_array);
-$simulation->setParameters();
-$simulation->runIterations(); 
+$iter = new Iteration(); 
+$iter->setImportVars($import_array);
+$iter->setParameters();
+$iter->runIterations(); 
 
