@@ -1,12 +1,14 @@
 <?php 
-
+/**
+ * Run the simulation for a single species/habitat
+ */
 class Simulation extends SimEnv implements SimActions { 
 
   /**
    * The Species in this simulation
    * @var Species
    */
-  private $species; 
+  private $species;
 
   /**
    * The herd(array of animals) in this simulation
@@ -49,49 +51,33 @@ class Simulation extends SimEnv implements SimActions {
     $this->herd->addAnimal($female);
   }
 
+  /**
+   * eat food, drink water  
+   */
   public function consume(){ 
     Log::instance()->debug("Consume resources");
-    $this->consumeFood();
-    $this->consumeWater();
 
-
-  }
-
-  private function consumeFood(){
-    $hungry_count = 0; 
-    $this->food_left_over = $this->habitat->monthly_food;
-    $this->herd->random();
-
-    foreach ($this->herd->get() as $animal){ 
-
-      if ($this->habitat->monthly_food > 0){ 
-        $this->food_left_over-=$this->species->monthly_food_consumption;
-        $animal->notHungry();
-      } else { 
-        $this->food_left_over = 0; // half eaten food -- still gets eaten
-        $animal->incrementHungry();
-        $hungry_count++;
-      }
+    $this->herd->eats($this->habitat->monthly_food, $this->species->monthly_food_consumption);
+    $this->herd->drinks($this->habitat->monthly_water, $this->species->monthly_water_consumption);
+    if ($this->isNewYear()) { 
+      $this->herd->ages();
     }
-    Log::instance()->debug("Food Left Over:".$this->food_left_over);
-    Log::instance()->debug("Hungry:".$hungry_count);
   }
 
-  private function consumeWater() {
-    return true; 
-  }
-
-
+  /**
+   * darwin decides 
+   */
   public function survive(){ 
     Log::instance()->debug("Initialize the simulation");
-
-
+    $this->herd->survive();
 
   }
 
+  /**
+   * mating 
+   */
   public function breed() { 
     Log::instance()->debug("Start the breeding");
+    $this->herd->breeds();
   }
-
-
 }

@@ -9,4 +9,5 @@ interface SimActions {
 	public function breed(); 
 
 	public function survive(); 
+
 }

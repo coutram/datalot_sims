@@ -31,14 +31,22 @@ class SimTime {
 
   protected $years; 
 
-  protected function iterateTime() { 
+  protected $new_year = false; 
+
+  protected function iterateTime() {
+    $this->new_year = false; 
     if ($this->current_month == 12) { 
       $this->current_year++;
       $this->current_month = 1;
+      $this->new_year = true; 
     } else { 
       $this->current_month++;
     }
     Log::instance()->output("Running Simulation for " . $this->getPrintedYear() . " - ". $this->getPrintedMonth());
+  }
+
+  protected function isNewYear(){ 
+    return $this->new_year;
   }
 
   protected function isEndOfSimulation(){ 

@@ -1,9 +1,19 @@
 <?php
-
+/**
+ * get random value from min to max 
+ */
 class Dieroll { 
 
+  /**
+   * max value 
+   * @var int
+   */
   private $max; 
 
+  /**
+   * min value 
+   * @var int
+   */
   private $min; 
 
   public function __construct($min = 1, $max = 10){ 
@@ -14,5 +24,4 @@ class Dieroll {
   public function roll() { 
     return mt_rand($this->min, $this->max); 
   }
-
 }

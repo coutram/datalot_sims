@@ -4,6 +4,10 @@ class SimEnv extends SimTime {
 
   protected $habitat;
 
+  protected $food_left_over;
+
+  protected $water_left_over;
+
 	public function __construct($habitat, $years) { 
     $this->habitat = $habitat; 
     $this->years = $years;
