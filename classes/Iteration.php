@@ -35,9 +35,13 @@ class Iteration {
 
   private function runSimulation($sp, $hab) {
    $sim = new Simulation($hab, $this->parameters->getYears());
+   $sim->setSpecies($sp);
    $sim->init();
     while($sim->next()) { 
       $sim->setWeather();
+      $sim->consume();
+      $sim->survive();
+      $sim->breed();
 
       Log::instance()->debug("");
       Log::instance()->debug("");

@@ -38,7 +38,7 @@ class SimTime {
     } else { 
       $this->current_month++;
     }
-    Log::instance()->output("Running Simulation for " . $this->getPrintedYear() . " - ". $this->getPrintedMonth() ."\n");
+    Log::instance()->output("Running Simulation for " . $this->getPrintedYear() . " - ". $this->getPrintedMonth());
   }
 
   protected function isEndOfSimulation(){ 

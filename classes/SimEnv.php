@@ -33,7 +33,7 @@ class SimEnv extends SimTime {
     }
   }
 
-  public function setTemp($avg_temp, $degrees_delta) { 
+  private function setTemp($avg_temp, $degrees_delta) { 
     $dr = new Dieroll(0, $degrees_delta*2);
     $rand_val = $dr->roll(); 
 
@@ -46,5 +46,6 @@ class SimEnv extends SimTime {
     Log::instance()->debug("change: $change");
     Log::instance()->debug("temp: ". $this->temp );
   }
+
 
 }

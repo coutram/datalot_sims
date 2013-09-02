@@ -40,3 +40,10 @@ Task: create an application that imports the provided YAML config file (which co
 			- Seasons/Temperature
 				- Use this Season/Month mapping  12,1,2=Winter  3,4,5=Spring  6,7,8=Summer  9,10,11=Fall
 				- The temperature should be updated for every new month and should fluctuate above/below the average by up to 5 degrees, with a 0.5% chance of having up to a 15 degree fluctuation.
+
+
+
+	Questions/Assumptions: 
+	1. The initial Male and Female are a random breeding age to start
+	2. Food and Water are carried over month to month.
+	3. Half eaten food still gets eaten and the animal is still hungry 

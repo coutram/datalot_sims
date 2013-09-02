@@ -8,7 +8,7 @@ interface Living {
 
   public function breeds(); 
 
-  public function surviveWeather();
+  public function survive();
 
   public function age(); 
 

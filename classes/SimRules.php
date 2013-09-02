@@ -2,4 +2,8 @@
 
 class SimRules { 
 
+	public function __construct() { }
+
+  
+
 }
