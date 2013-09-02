@@ -4,6 +4,9 @@
  */
 class Breeding { 
 
+  const MATE_RATE_WITH_FULL_FOOD_WATER = 1; 
+  const MATE_RATE_WITH_NOT_ENOUGH_FOOD_WATER = .05; 
+
   /**
    * 
    * @var array
@@ -14,6 +17,8 @@ class Breeding {
    * @var Animal $current_animal
    */
   private $current_animal; 
+
+  private $supportive_habitat = false; 
 
 	public function __construct(){  } 
 
@@ -27,9 +32,48 @@ class Breeding {
 
   /**
    * 
+   * @param int $food_left
+   * @param int $water_left
+   */
+  public function setSupportiveHabitat($food_left, $water_left){ 
+    if($food_left < $this->current_animal->species->monthly_food_consumption){ 
+      $this->supportive_habitat = false;
+      return false;
+    }
+
+    if($water_left < $this->current_animal->species->monthly_water_consumption){ 
+      $this->supportive_habitat = false;
+      return false;
+    }
+
+    $this->supportive_habitat = true;
+    return true; 
+  }
+
+  /**
+   * getter for supportive_habitat
+   */
+  private function getSupportiveHabitat() { 
+    return $this->supportive_habitat;
+  }
+
+  /**
+   * 
    */
   public function mate(){ 
+    if ($this->getSupportiveHabitat()){ 
+      $this->runMating(self::MATE_RATE_WITH_FULL_FOOD_WATER);
+    } else { 
+      $this->runMating(self::MATE_RATE_WITH_NOT_ENOUGH_FOOD_WATER);
+    }
   } 
+
+  private function runMating($percent_mate){
+    $prob = new Probability($precent_mate);
+
+    $this->current_animal->incrementPregnancy();
+
+  }
 
   /**
    * 
@@ -61,28 +105,28 @@ class Breeding {
    * is the current animal male
    */
   private function isMale(){ 
-    return $this->current_animal->gender == Animal::MALE;
+    return $this->current_animal->getGender() == Animal::MALE;
   }
 
   /**
    * is the current animal in gestation
    */
   private function inGestation(){
-    return $this->current_animal->pregnant > 0;
+    return $this->current_animal->getPregnant() > 0;
   }
 
   /**
    * is the current animals age less than the minumim breeding age 
    */
   private function isLessThanMinumimBreedingAge(){ 
-    return $this->current_animal->age < $this->getMinumimBreedAge();
+    return $this->current_animal->getAge() < $this->getMinumimBreedAge();
   }
 
   /**
    * is the current animals age greater than the maximum breeding age 
    */
   private function isGreaterThanMaximumBreedingAge(){ 
-    return $this->current_animal->age > $this->getMaximumBreedAge();
+    return $this->current_animal->getAge() > $this->getMaximumBreedAge();
   }
 
   /**
@@ -90,7 +134,7 @@ class Breeding {
    */
   private function hasNoMalesInHerd($animals){ 
     foreach ($animals as $animal){ 
-      if($animal->gender==Animal::MALE){ 
+      if($animal->getGender()==Animal::MALE){ 
         return false;
       }
     }
@@ -102,13 +146,13 @@ class Breeding {
    *
    */
   private function getMinumimBreedAge() { 
-    return $this->current_animal->species->minimum_breeding_age;
+    return $this->current_animal->getSpecies()->minimum_breeding_age;
   }
 
   /**
    * getter for max breeding age
    */
   private function getMaximumBreedAge() { 
-    return $this->current_animal->species->maximum_breeding_age;
+    return $this->current_animal->getSpecies()->maximum_breeding_age;
   }
 }

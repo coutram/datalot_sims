@@ -108,6 +108,13 @@ class Animal {
   }
 
   /**
+   * getter for pregnant
+   */
+  public function getPregnant(){
+    return $this->pregnant;
+  }
+
+  /**
    * increments age 
    */
   public function incrementAge(){ 
@@ -126,6 +133,10 @@ class Animal {
    */
   public function incrementThirsty(){ 
     $this->thirsty++;
+  }
+
+  public function incrementPregnancy(){ 
+    $this->pregnant++;
   }
 
   /**

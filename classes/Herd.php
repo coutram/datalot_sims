@@ -13,13 +13,13 @@ class Herd implements Living {
    * Food left over 
    * @var int
    */
-  protected $food_left_over = 0;
+  protected $food_left = 0;
 
   /**
    * Water left over 
    * @var int
    */
-  protected $water_left_over = 0;
+  protected $water_left = 0;
 
   /**
    * Add a new animal to the array 
@@ -55,20 +55,19 @@ class Herd implements Living {
    */
   public function drinks($habitat_water, $consumption) {
     $water_count = 0;
-    $this->water_left_over = $habitat_water; 
+    $this->water_left = $habitat_water; 
     $this->random();
     foreach ($this->get() as $animal){ 
-      if ($habitat_water > 0){ 
-        $this->water_left_over-=$consumption;
+      if ($this->water_left > 0){ 
+        $this->water_left-=$consumption;
       } else { 
-        $this->water_left_over = 0; // half eaten food -- still gets eaten
+        $this->water_left = 0; // half eaten food -- still gets eaten
         $animal->incrementHungry();
         $water_count++;
       }
     }
-    Log::instance()->debug("Water Left Over: ".$this->water_left_over);
+    Log::instance()->debug("Water Left Over: ".$this->water_left);
     Log::instance()->debug("Thirsty: ".$water_count);
-    return $habitat_water;
   }
 
   /**
@@ -76,22 +75,21 @@ class Herd implements Living {
    */
   public function eats($habitat_food, $consumption) { 
     $hungry_count = 0; 
-    $this->food_left_over = $habitat_food;
+    $this->food_left = $habitat_food;
     $this->random();
 
     foreach ($this->get() as $animal){ 
-      if ($habitat_food > 0){ 
-        $this->food_left_over-=$consumption;
+      if ($habitat_food > $consumption){ 
+        $this->food_left-=$consumption;
         $animal->notHungry();
       } else { 
-        $this->food_left_over = 0; // half eaten food -- still gets eaten
+        $this->food_left = 0; // half eaten food -- still gets eaten
         $animal->incrementHungry();
         $hungry_count++;
       }
     }
-    Log::instance()->debug("Food Left Over: ".$this->food_left_over);
+    Log::instance()->debug("Food Left Over: ".$this->food_left);
     Log::instance()->debug("Hungry: ".$hungry_count);
-    return $habitat_food;
   }
 
   /**
@@ -103,6 +101,7 @@ class Herd implements Living {
       $breed->setAnimal($animal); 
 
       if($breed->canBreed($this->animals)){ 
+        $breed->setSupportiveHabitat($this->food_left, $this->water_left); 
         $breed->mate();
         $breed->birth();
       }

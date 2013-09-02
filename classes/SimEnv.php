@@ -4,6 +4,10 @@
  */
 class SimEnv extends SimTime { 
 
+  const CHANCE_OF_EXTREME_TEMPERATURE = .5;
+  const EXTREME_TEMPERATURE_CHANGE = 15;
+  const TEMPERATURE_CHANGE = 5;
+
   /**
    * the habitat of the simulation
    */
@@ -45,12 +49,12 @@ class SimEnv extends SimTime {
 
     $avg_temp = $this->habitat->average_temperature[$season]; 
 
-    $prob = new Probability(.5);
+    $prob = new Probability(self::CHANCE_OF_EXTREME_TEMPERATURE);
     $prob->run(); 
     if ($prob->hasHappened()) {  
-      $this->setTemp($avg_temp, 15);
+      $this->setTemp($avg_temp, self::EXTREME_TEMPERATURE_CHANGE);
     } else { 
-      $this->setTemp($avg_temp, 5);
+      $this->setTemp($avg_temp, self::TEMPERATURE_CHANGE);
     }
   }
 
