@@ -1,28 +1,34 @@
 <?php 
-
+/**
+ * Simulate the Environment
+ */
 class SimEnv extends SimTime { 
 
+  /**
+   * the habitat of the simulation
+   */
   protected $habitat;
-
-  protected $food_left_over;
-
-  protected $water_left_over;
 
 	public function __construct($habitat, $years) { 
     $this->habitat = $habitat; 
     $this->years = $years;
   }
 
+  /**
+   * another round?    
+   */
   public function next() {
     if ($this->isEndOfSimulation()) { 
       return false; 
     }
 
-    $this->iterateTime();
-
+    $this->incrementTime();
     return true;
   }
 
+  /**
+   * sets the weather for the environment
+   */
   public function setWeather() { 
     $season = $this->getSeason(); 
 
@@ -37,6 +43,9 @@ class SimEnv extends SimTime {
     }
   }
 
+  /**
+   * Sets the temperature for the environment
+   */
   private function setTemp($avg_temp, $degrees_delta) { 
     $dr = new Dieroll(0, $degrees_delta*2);
     $rand_val = $dr->roll(); 
@@ -50,6 +59,4 @@ class SimEnv extends SimTime {
     Log::instance()->debug("change: $change");
     Log::instance()->debug("temp: ". $this->temp );
   }
-
-
 }

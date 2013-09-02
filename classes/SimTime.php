@@ -1,15 +1,17 @@
 <?php 
-
+/**
+ * Time Simulation functions 
+ */
 class SimTime { 
 
   const WINTER = 'winter';
-
   const SPRING = 'spring'; 
-
   const SUMMER = 'summer';
-
   const FALL = 'fall';
 
+  /**
+   * season map 
+   */
   private static $season_month_map = array ( 
     1 => self::WINTER,
     2 => self::WINTER,
@@ -25,15 +27,30 @@ class SimTime {
     12 =>  self::WINTER,
   );
 
+  /**
+   * The current month of the iteration
+   */
   protected $current_month = 0; 
 
+  /**
+   * The current year of the iteration 
+   */
   protected $current_year = 1;
 
+  /**
+   * the amount of years the species can live 
+   */
   protected $years; 
 
+  /**
+   * Is this a new year 
+   */
   protected $new_year = false; 
 
-  protected function iterateTime() {
+  /**
+   * increment time 
+   */
+  protected function incrementTime() {
     $this->new_year = false; 
     if ($this->current_month == 12) { 
       $this->current_year++;
@@ -67,5 +84,4 @@ class SimTime {
   protected function getSeason(){ 
     return self::$season_month_map[$this->current_month];
   }
-
 }

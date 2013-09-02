@@ -1,5 +1,7 @@
 <?php 
-
+/**
+ * Run a probability 
+ */
 class Probability { 
 
   private $percent; 

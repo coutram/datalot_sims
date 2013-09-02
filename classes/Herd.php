@@ -1,6 +1,6 @@
 <?php 
 /**
- * the groups of animals being simulated
+ * The groups of animals being simulated
  */
 class Herd implements Living { 
 
@@ -94,13 +94,22 @@ class Herd implements Living {
     return $habitat_food;
   }
 
+  /**
+   * Do the breeding 
+   */
   public function breeds() { 
   }
 
+  /**
+   * who survives
+   */
   public function survive() { 
     return true; 
   }
 
+  /**
+   * Age them 
+   */
   public function ages() { 
     foreach ($this->get() as $animal){ 
       $animal->incrementAge();

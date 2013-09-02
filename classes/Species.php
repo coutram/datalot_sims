@@ -30,25 +30,60 @@
 class Species { 
 
   const ATTRIBUTES = 'attributes';
-
   const NAME = 'name';
 
+  /**
+   * animal type 
+   * @var string
+   */
   private $name; 
 
+  /**
+   * monthly food consumption of animal
+   * @var int
+   */
   private $monthly_food_consumption; 
 
+  /**
+   * monthly water consumption of animal 
+   * @var int
+   */
   private $monthly_water_consumption;
 
+  /**
+   * life span of animal in years 
+   * @var int
+   */
   private $life_span;
 
+  /**
+   * breeding low range 
+   * @var int
+   */
   private $minimum_breeding_age;
 
+  /**
+   * breeding high range
+   * @var int
+   */
   private $maximum_breeding_age; 
 
+  /**
+   * how long before gestation 
+   * @var int
+   */
   private $gestation_period; 
 
+  /**
+   * minimum temperature 
+   * @var int
+   */
   private $minimum_temperature;
 
+  /**
+   * maximinu temperature 
+   * @var int
+   */
   private $maximum_temperature; 
 
 	public function __construct($species_array) { 
@@ -63,6 +98,9 @@ class Species {
     return $this->$key  = $value;
   }
 
+  /**
+   * Set the value of the species array
+   */
   private function setFromArray($species_array) { 
     $this->name = $species_array[self::NAME];
     foreach ($species_array[self::ATTRIBUTES] as $index => $attr) {

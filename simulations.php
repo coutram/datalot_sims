@@ -1,5 +1,10 @@
 <?php 
 
+/**
+ * very simple controller that does the import
+ * then runs the iterations of the simulation
+ */
+
 // Report all PHP errors (see changelog)
 error_reporting(E_ALL);
 
