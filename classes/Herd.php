@@ -103,12 +103,14 @@ class Herd implements Living {
       if($breed->canBreed($this->animals)){ 
         $breed->setSupportiveHabitat($this->food_left, $this->water_left); 
         $breed->mate();
-        if ($breed->birth()){ 
-          $kid = new Animal($animal->getSpecies());
-          $kid->setAge(0);
-          $kid->setRandomGender();
-          $this->herd->addAnimal($kid);
-        }
+      }
+
+      if ($breed->birth()){ 
+        Log::instance()->debug("Give birth to new kid");
+        $kid = new Animal($animal->getSpecies());
+        $kid->setAge(0);
+        $kid->setRandomGender();
+        $this->addAnimal($kid);
       }
     }
   }

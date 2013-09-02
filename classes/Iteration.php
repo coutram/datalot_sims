@@ -62,10 +62,10 @@ class Iteration {
       $sim->setWeather();
       $sim->consume();
       $sim->breed();
-      $sim->survive();
 
       Log::instance()->debug("");
       Log::instance()->debug("");
     }
+    exit;
   }
 }

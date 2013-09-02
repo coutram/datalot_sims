@@ -169,12 +169,12 @@ class Animal {
    */
   public function setByRandomBreedAge(){
     $dr = new Dieroll($this->species->minimum_breeding_age, $this->species->maximum_breeding_age);
-    return $dr->roll();
+    $this->age =  $dr->roll();
   }
 
   public function setRandomGender(){
     $dr = new Dieroll(0,1);
     $rand = $dr->roll();
-    return $valid_genders[$rand];
+    $this->gender = self::$valid_genders[$rand];
   }
 }

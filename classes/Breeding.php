@@ -33,12 +33,12 @@ class Breeding {
    * @param int $water_left
    */
   public function setSupportiveHabitat($food_left, $water_left){ 
-    if($food_left < $this->current_animal->species->monthly_food_consumption){ 
+    if($food_left < $this->current_animal->getSpecies()->monthly_food_consumption){ 
       $this->supportive_habitat = false;
       return false;
     }
 
-    if($water_left < $this->current_animal->species->monthly_water_consumption){ 
+    if($water_left < $this->current_animal->getSpecies()->monthly_water_consumption){ 
       $this->supportive_habitat = false;
       return false;
     }
@@ -69,7 +69,7 @@ class Breeding {
    * run mating 
    */
   private function runMating($percent_mate){
-    $prob = new Probability($precent_mate);
+    $prob = new Probability($percent_mate);
     $prob->run();
     if($prob->hasHappened()){
       $this->current_animal->incrementPregnancy();
@@ -84,7 +84,7 @@ class Breeding {
       $this->current_animal->incrementPregnancy();
     }
 
-    if($this->current_animal->getPregnant() == $this->current_animal->getSpecies()->gestation){ 
+    if($this->current_animal->getPregnant() == $this->current_animal->getSpecies()->gestation_period){ 
       $this->current_animal->giveBirth();
       return true;
     }
@@ -97,17 +97,23 @@ class Breeding {
   public function canBreed($animals){ 
     switch (true) { 
       case $this->isMale():
+        // Log::instance()->debug("Can't Breed: Male");
         return false;
       case $this->inGestation():
+        // Log::instance()->debug("Can't Breed: Gestation");
         return false;
       case $this->isLessThanMinumimBreedingAge():
+        // Log::instance()->debug("Can't Breed: Too Young");
         return false;
       case $this->isGreaterThanMaximumBreedingAge():
+        // Log::instance()->debug("Can't Breed: Too Old");
         return false;
       case $this->hasNoMalesInHerd($animals):
+        // Log::instance()->debug("Can't Breed: No Males Left");
         return false;
     }
 
+    Log::instance()->debug("Breeding new kid"); 
     return true;
   }
 
