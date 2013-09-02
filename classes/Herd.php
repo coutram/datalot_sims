@@ -55,7 +55,7 @@ class Herd implements Living {
    */
   public function drinks($habitat_water, $consumption) {
     $water_count = 0;
-    $this->water_left_over += $habitat_water; 
+    $this->water_left_over = $habitat_water; 
     $this->random();
     foreach ($this->get() as $animal){ 
       if ($habitat_water > 0){ 
@@ -76,7 +76,7 @@ class Herd implements Living {
    */
   public function eats($habitat_food, $consumption) { 
     $hungry_count = 0; 
-    $this->food_left_over += $habitat_food;
+    $this->food_left_over = $habitat_food;
     $this->random();
 
     foreach ($this->get() as $animal){ 
@@ -98,6 +98,15 @@ class Herd implements Living {
    * Do the breeding 
    */
   public function breeds() { 
+    $breed = new Breeding();
+    foreach ($this->animals as $animal) { 
+      $breed->setAnimal($animal); 
+
+      if($breed->canBreed($this->animals)){ 
+        $breed->mate();
+        $breed->birth();
+      }
+    }
   }
 
   /**
@@ -115,6 +124,10 @@ class Herd implements Living {
     }
   }
 
+  /**
+   * kill the animal =( 
+   * @param int $index
+   */
   private function kill($index){ 
     unset($this->animals[$index]);
   }

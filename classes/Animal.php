@@ -56,6 +56,9 @@ class Animal {
    */
   private $pregnant = 0; 
 
+  /**
+   * @param Species $species
+   */
   public function __construct($species) {
     $this->species = $species; 
     $this->type = $species->name;

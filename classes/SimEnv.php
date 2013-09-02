@@ -9,8 +9,17 @@ class SimEnv extends SimTime {
    */
   protected $habitat;
 
+  /**
+   * Current temperature 
+   * @var int
+   */
   protected $temp;
 
+  /**
+   * 
+   * @param Habitat $habitat
+   * @param int $years
+   */
 	public function __construct($habitat, $years) { 
     $this->habitat = $habitat; 
     $this->years = $years;
