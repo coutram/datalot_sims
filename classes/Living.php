@@ -8,7 +8,7 @@ interface Living {
 
   public function breeds(); 
 
-  public function survive();
+  public function survive($temp);
 
   public function ages(); 
 

@@ -103,8 +103,20 @@ class Herd implements Living {
   /**
    * who survives
    */
-  public function survive() { 
-    return true; 
+  public function survive($temp) { 
+    foreach ($this->get() as $index => $elem) { 
+      $survive = new Survive($elem);
+      $survive->setTemp($temp);
+      $survive->run();
+
+      if ($survive->hasSurvived()){ 
+        $this->kill($index);
+      }
+    }
+  }
+
+  private function kill($index){ 
+    unset($this->animals[$index]);
   }
 
   /**

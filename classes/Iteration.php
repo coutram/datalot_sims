@@ -61,8 +61,8 @@ class Iteration {
     while($sim->next()) { 
       $sim->setWeather();
       $sim->consume();
-      $sim->survive();
       $sim->breed();
+      $sim->survive();
 
       Log::instance()->debug("");
       Log::instance()->debug("");

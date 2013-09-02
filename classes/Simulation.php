@@ -69,8 +69,7 @@ class Simulation extends SimEnv implements SimActions {
    */
   public function survive(){ 
     Log::instance()->debug("Initialize the simulation");
-    $this->herd->survive();
-
+    $this->herd->survive($this->temp);
   }
 
   /**
