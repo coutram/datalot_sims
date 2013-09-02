@@ -45,5 +45,3 @@ Task: create an application that imports the provided YAML config file (which co
 
 	Questions/Assumptions: 
 	1. The initial Male and Female are a random breeding age to start
-	2. Food and Water are carried over month to month.
-	3. Half eaten food still gets eaten and the animal is still hungry 

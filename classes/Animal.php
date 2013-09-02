@@ -147,6 +147,13 @@ class Animal {
   }
 
   /**
+   * 
+   */
+  public function giveBirth() { 
+    $this->pregnant = 0; 
+  }
+
+  /**
    * setter for gender
    */
   public function setGender($gender){
@@ -163,5 +170,11 @@ class Animal {
   public function setByRandomBreedAge(){
     $dr = new Dieroll($this->species->minimum_breeding_age, $this->species->maximum_breeding_age);
     return $dr->roll();
+  }
+
+  public function setRandomGender(){
+    $dr = new Dieroll(0,1);
+    $rand = $dr->roll();
+    return $valid_genders[$rand];
   }
 }

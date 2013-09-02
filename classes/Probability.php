@@ -8,7 +8,7 @@ class Probability {
   private $result;
 
   public function __construct($percent  = 5) { 
-    $this->percent = 5; 
+    $this->percent = $percent; 
   }
 
   public function run() { 

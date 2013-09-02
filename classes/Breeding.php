@@ -8,16 +8,13 @@ class Breeding {
   const MATE_RATE_WITH_NOT_ENOUGH_FOOD_WATER = .05; 
 
   /**
-   * 
-   * @var array
-   */
-	private $animals;
-
-  /**
-   * @var Animal $current_animal
+   * @var Animal 
    */
   private $current_animal; 
 
+  /**
+   * @var boolean
+   */
   private $supportive_habitat = false; 
 
 	public function __construct(){  } 
@@ -58,7 +55,7 @@ class Breeding {
   }
 
   /**
-   * 
+   * chooses correcting mating
    */
   public function mate(){ 
     if ($this->getSupportiveHabitat()){ 
@@ -68,17 +65,30 @@ class Breeding {
     }
   } 
 
+  /**
+   * run mating 
+   */
   private function runMating($percent_mate){
     $prob = new Probability($precent_mate);
-
-    $this->current_animal->incrementPregnancy();
-
+    $prob->run();
+    if($prob->hasHappened()){
+      $this->current_animal->incrementPregnancy();
+    }
   }
 
   /**
-   * 
+   * give birth 
    */
   public function birth(){ 
+    if($this->inGestation()) { 
+      $this->current_animal->incrementPregnancy();
+    }
+
+    if($this->current_animal->getPregnant() == $this->current_animal->getSpecies()->gestation){ 
+      $this->current_animal->giveBirth();
+      return true;
+    }
+    return false;
   } 
 
   /**
