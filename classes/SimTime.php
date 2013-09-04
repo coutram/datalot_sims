@@ -43,41 +43,83 @@ class SimTime {
   protected $years; 
 
   /**
+   * Randomly select month to start the 
+   * simulation to not let winter weather influence results
+   * @var int
+   */
+  protected $start_month;
+
+  /**
+   * Month behind the start month so we can appropriately simulation end
+   * @var int 
+   */
+  protected $end_month;
+
+  /**
    * Is this a new year 
    */
   protected $new_year = false; 
 
   /**
+   * randomly choose the start month so we can run an unbiased sim
+   */
+  protected function pickStartMonth() { 
+    $dr = new Dieroll(1,12);
+    $this->start_month = $dr->roll();
+    $this->setEndMonth();
+    $this->current_month = $this->start_month;
+  }
+
+  /**
+   * set the end month behind the month start (increment years if sim doens't start in jan)
+   */
+  protected function setEndMonth(){
+    if($this->start_month == 1){ 
+      $this->end_month = 12;
+    } else { 
+      $this->end_month = $this->start_month; 
+      $this->years++;
+    }
+  }
+
+  /**
+   * getter for end month
+   */
+  protected function getEndMonth(){ 
+    return $this->end_month;
+  }
+
+  /**
    * increment time 
    */
   protected function incrementTime() {
-    $this->new_year = false; 
     if ($this->current_month == 12) { 
       $this->current_year++;
       $this->current_month = 1;
-      $this->new_year = true; 
     } else { 
       $this->current_month++;
     }
-    Log::instance()->output("Running Simulation for " . $this->getPrintedYear() . " - ". $this->getPrintedMonth());
   }
 
+  /**
+   * is this a new year 
+   */
   protected function isNewYear(){ 
     return $this->new_year;
   }
 
   protected function isEndOfSimulation(){ 
-    if($this->current_year == $this->years && $this->current_month == 12) { 
+    if($this->current_year == $this->years && $this->current_month == $this->getEndMonth()) { 
       return true;
     }
     return false;
   }
 
-  private function getPrintedYear() {
+  protected function getPrintedYear() {
     return $this->current_year; 
   }
 
-  private function getPrintedMonth() { 
+  protected function getPrintedMonth() { 
     return $this->current_month; 
   }
 

@@ -45,3 +45,4 @@ Task: create an application that imports the provided YAML config file (which co
 
 	Questions/Assumptions: 
 	1. The initial Male and Female are a random breeding age to start
+	2. Randomly select month to start.

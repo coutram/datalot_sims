@@ -105,8 +105,9 @@ class Herd implements Living {
         $breed->mate();
       }
 
-      if ($breed->birth()){ 
+      if ($breed->birth()){
         Log::instance()->debug("Give birth to new kid");
+        Stats::instance()->incOffspring();
         $kid = new Animal($animal->getSpecies());
         $kid->setAge(0);
         $kid->setRandomGender();
@@ -124,7 +125,8 @@ class Herd implements Living {
       $survive->setTemp($temp);
       $survive->run();
 
-      if ($survive->hasSurvived()){ 
+      if (!$survive->hasSurvived()){ 
+        Stats::instance()->incDeaths();
         $this->kill($index);
       }
     }

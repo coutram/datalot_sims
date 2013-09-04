@@ -3,16 +3,18 @@
  * Singleton parent -- extend to build singleton classes 
  */
 class Singleton {
-    protected static $instance = null;
+ 
+    private static $instances = array( );
+ 
+    protected function __construct(){  }
+ 
+    protected function __clone(){  }
 
-    protected function __construct(){ }
-    
-    protected function __clone(){ }
-
-    public static function instance() {
-        if (!isset(static::$instance)) {
-            static::$instance = new static;
+    public static function instance(){
+        $cls = get_called_class();
+        if (!isset(self::$instances[$cls])) {
+            self::$instances[$cls] = new static;
         }
-        return static::$instance;
+        return self::$instances[$cls];
     }
 }

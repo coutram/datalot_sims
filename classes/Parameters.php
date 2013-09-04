@@ -82,5 +82,4 @@ class Parameters  {
   public function getHabitats(){ 
     return $this->habitats;
   }
-
 }

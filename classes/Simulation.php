@@ -35,6 +35,9 @@ class Simulation extends SimEnv implements SimActions {
    * The initial set up for the simulation
    */
   public function init() { 
+    $this->pickStartMonth();
+    Stats::instance()->resetStats();
+
     Log::instance()->debug("Initialize the simulation");
     $this->herd = new Herd(); 
 
@@ -78,5 +81,11 @@ class Simulation extends SimEnv implements SimActions {
   public function breed() { 
     Log::instance()->debug("Start the breeding");
     $this->herd->breeds();
+  }
+
+  public function record() { 
+    $number_of_animals = $this->herd->count();
+    Log::instance()->output("Number of animals alive: $number_of_animals");
+    Stats::instance()->setPopulation($number_of_animals);
   }
 }

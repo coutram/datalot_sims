@@ -38,6 +38,8 @@ class SimEnv extends SimTime {
     }
 
     $this->incrementTime();
+
+    Log::instance()->output("Running Simulation for " . $this->getPrintedYear() . " - ". $this->getPrintedMonth());
     return true;
   }
 

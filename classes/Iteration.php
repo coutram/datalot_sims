@@ -34,16 +34,19 @@ class Iteration {
    */
   public function runIterations() {
     $iterations = $this->parameters->getIterations();
-    for ($i=1;$i<=$iterations;$i++) { 
-      Log::instance()->output("Running $i Iteration");
- 
-      foreach ($this->parameters->getSpecies() as $sp){ 
-        Log::instance()->output("Running for ".$sp->name);
 
-        foreach ($this->parameters->getHabitats() as $hab) { 
-          Log::instance()->output("Running for ".$hab->name);
+    foreach ($this->parameters->getSpecies() as $sp){ 
+      Log::instance()->output("Running for ".$sp->name);
+      Stats::instance()->setSpecies($sp->name);
 
-          $this->runSimulation($sp, $hab);
+      foreach ($this->parameters->getHabitats() as $hab) { 
+        Log::instance()->output("Running for ".$hab->name);
+        Stats::instance()->setHabitat($hab->name);
+       
+          for ($i=1;$i<=$iterations;$i++) { 
+            Log::instance()->output("Running $i Iteration");
+       
+            $this->runSimulation($sp, $hab);
         }
       }
     }
@@ -61,11 +64,10 @@ class Iteration {
     while($sim->next()) { 
       $sim->setWeather();
       $sim->consume();
+      $sim->survive();
       $sim->breed();
-
-      Log::instance()->debug("");
-      Log::instance()->debug("");
     }
-    exit;
+    $sim->record();
+    Stats::instance()->insertStats();
   }
 }

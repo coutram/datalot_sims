@@ -42,6 +42,7 @@ class Survive {
     switch(true){ 
       case $this->isDieAge():
         Log::instance()->debug("Animal Died: Age condition");
+        Stats::instance()->incTooOld();
         $this->survive = false;
         break; 
 
@@ -52,11 +53,13 @@ class Survive {
 
       case $this->isThirsty():
         Log::instance()->debug("Animal Died: Thirsty condition");
+        Stats::instance()->incThirsty();
         $this->survive = false;
         break;
 
       case $this->isHungry():
         Log::instance()->debug("Animal Died: Hungry condition");
+        Stats::instance()->incHungry();
         $this->survive = false;
         break;
     }
@@ -65,7 +68,7 @@ class Survive {
   /**
    * Did the animal survive a lookup on kill conditions? 
    */
-  public function hasSurvived(){ 
+  public function hasSurvived(){
     return $this->survive;
   }
 
@@ -82,10 +85,12 @@ class Survive {
    */
   private function isDieWeather(){
     if ($this->temp < $this->animal->getSpecies()->minimum_temperature) { 
+      Stats::instance()->incTooCold();
       return true;
     }
 
     if ($this->temp > $this->animal->getSpecies()->maximum_temperature){ 
+      Stats::instance()->incTooHot();
       return true;
     }
 

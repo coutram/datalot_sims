@@ -1,6 +1,6 @@
 <?php 
 /**
- * 
+ * Breeds new animals -- mating and birth and the rules of both 
  */
 class Breeding { 
 

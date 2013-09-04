@@ -20,3 +20,4 @@ $iter->setImportVars($import_array);
 $iter->setParameters();
 $iter->runIterations(); 
 
+Stats::instance()->seeStats();
