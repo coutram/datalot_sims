@@ -59,7 +59,7 @@ class Simulation extends SimEnv implements SimActions {
    */
   public function consume(){ 
     Log::instance()->debug("Consume resources");
-
+    $this->herd->setMaxCount();
     $this->herd->eats($this->habitat->monthly_food, $this->species->monthly_food_consumption);
     $this->herd->drinks($this->habitat->monthly_water, $this->species->monthly_water_consumption);
     if ($this->isNewYear()) { 
@@ -83,6 +83,9 @@ class Simulation extends SimEnv implements SimActions {
     $this->herd->breeds();
   }
 
+  /**
+   * Make a stats call to record the population at a given time
+   */
   public function record() { 
     $number_of_animals = $this->herd->count();
     Log::instance()->output("Number of animals alive: $number_of_animals");

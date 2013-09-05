@@ -15,9 +15,18 @@ $import->setFilename("config.txt");
 $import->runImport(); 
 
 $import_array = $import->getImportVars(); 
+
+
+$parameters = new Parameters(); 
+$parameters->parseImportArray($import_array); 
+
 $iter = new Iteration(); 
-$iter->setImportVars($import_array);
-$iter->setParameters();
+$iter->setParameters($parameters);
 $iter->runIterations(); 
 
-Stats::instance()->seeStats();
+$export = new Export(); 
+$export->openFile();
+$export->setIterations($parameters->getIterations());
+$export->setYears($parameters->getYears());
+$export->outputToFile();
+$export->closeFile();

@@ -63,7 +63,7 @@ class SimTime {
   /**
    * randomly choose the start month so we can run an unbiased sim
    */
-  protected function pickStartMonth() { 
+  public function pickStartMonth() { 
     $dr = new Dieroll(1,12);
     $this->start_month = $dr->roll();
     $this->setEndMonth();

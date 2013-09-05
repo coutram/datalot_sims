@@ -51,6 +51,13 @@ class Herd implements Living {
   }
 
   /**
+   * Set the max count for the herd 
+   */
+  public function setMaxCount(){ 
+    Stats::instance()->setMax($this->count());
+  }
+
+  /**
    * roll through animals and drink 
    */
   public function drinks($habitat_water, $consumption) {

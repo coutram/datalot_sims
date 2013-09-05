@@ -5,28 +5,18 @@
 class Iteration { 
 
   /**
-   * Import array vars 
-   * @var array
+   * The Parameters Object
    */
-  private $import_array; 
-
   private $parameters;
 
 	public function __construct() { }
 
   /**
-   * Sets the Import Vars
-   * @param array $import_array
-   */
-	public function setImportVars($import_array) { 
-    $this->import_array = $import_array;
-  }
-
-  /**
    * Sets the Parameters via the class parser
+   * @var Parameters
    */
-  public function setParameters() { 
-    $this->parameters = new Parameters($this->import_array); 
+  public function setParameters($parameters) { 
+    $this->parameters = $parameters; 
   }
 
   /**

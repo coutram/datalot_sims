@@ -33,15 +33,13 @@ class Parameters  {
    */
   private $habitats;
 
-	public function __construct($import_vars) { 
-    $this->parseImportArray($import_vars); 
-  }
+	public function __construct() {   }
 
   /**
    * parse the values into our parameters 
    * @var array 
    */
-  private function parseImportArray($import_vars) { 
+  public function parseImportArray($import_vars) { 
     $this->years = $import_vars[self::YEARS];
     $this->iterations = $import_vars[self::ITERATIONS];
 
