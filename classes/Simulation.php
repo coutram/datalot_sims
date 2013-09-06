@@ -88,7 +88,7 @@ class Simulation extends SimEnv implements SimActions {
    */
   public function record() { 
     $number_of_animals = $this->herd->count();
-    Log::instance()->output("Number of animals alive: $number_of_animals");
+    Log::instance()->debug("Number of animals alive: $number_of_animals");
     Stats::instance()->setPopulation($number_of_animals);
   }
 }

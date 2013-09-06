@@ -29,7 +29,12 @@ class Stats extends Singleton {
    * Population of the species on this habitat for this simulation
    * @var int
    */
-  protected $population = 0; 
+  protected $population = 0;
+
+  /**
+   * @var int
+   */
+  protected $iter = 0; 
 
   /**
    * The Max Population of an iteration
@@ -41,7 +46,7 @@ class Stats extends Singleton {
    * The deaths that have occured in this simulation
    * @var int
    */
-  protected $deaths = 0; 
+  protected $deaths = 0;
 
   /**
    * The offspring that have been born in this simulation 
@@ -49,6 +54,14 @@ class Stats extends Singleton {
    */
   protected $offspring = 0;
 
+  protected $total_deaths = 0 ; 
+  protected $total_population = 0;
+  protected $total_starvation = 0;
+  protected $total_thirst = 0;
+  protected $total_age = 0;
+  protected $total_hot_weather = 0;
+  protected $total_cold_weather = 0;
+  protected $total_max = 0;
   /**
    * Array of details of the cause of deaths in this simulation 
    * @var array
@@ -186,6 +199,7 @@ class Stats extends Singleton {
     $insert_array = array(
       'species' => $this->species,
       'habitat' => $this->habitat,
+      'iter' => $this->iter,
       'population' => $this->population,
       'max_population' => $this->max_population,
       'offspring' => $this->offspring,
@@ -199,6 +213,34 @@ class Stats extends Singleton {
    * Set the stats 
    */
   public function getStats(){ 
+    $avg_pop = $this->getAverage();
+    foreach ($avg_pop['result'] as $pop){ 
+      $species = $pop['_id']['species'];
+      $habitat = $pop['_id']['habitat'];
+
+      $result[$species][$habitat]["avg"] = $pop['average'];
+      $this->getIterationValues($species, $habitat);
+      
+      $result[$species][$habitat]["mortality"] = round(($this->total_deaths/$this->total_population)*100,2);
+      $result[$species][$habitat]["deaths"] = $this->total_deaths;
+      $result[$species][$habitat]["max"] = $this->total_max;
+      foreach(array_keys($this->die_cause) as $cause) {
+        $result[$species][$habitat]["cause"][$cause] = 0;
+        if ($this->total_deaths != 0){
+          $cause_var = "total_".$cause; 
+          $percent = $this->$cause_var/$this->total_deaths*100;
+          $result[$species][$habitat]["cause"][$cause] = round($percent, 2); 
+        } 
+      }
+    }
+
+    return $result;
+  }
+
+  /**
+   * Get the average population for each species and habitat using mongo's aggregation framework
+   */
+  private function getAverage() { 
     $result = array();
     $group_by = array(
       '$group' => array(
@@ -212,47 +254,38 @@ class Stats extends Singleton {
       )
     );
 
-    $avg_pop = $this->db->aggregate($group_by);
-    foreach ($avg_pop['result'] as $pop){ 
-      $species = $pop['_id']['species'];
-      $habitat = $pop['_id']['habitat'];
+    return $this->db->aggregate($group_by);
+  }
 
-      $result[$species][$habitat]["avg"] = $pop['average'];
+  private function getIterationValues($species, $habitat) {
+    //initialize vars for this run  
+    $this->total_deaths = 0 ; 
+    $this->total_population = 0;
+    $this->total_starvation = 0;
+    $this->total_thirst = 0;
+    $this->total_age = 0;
+    $this->total_hot_weather = 0;
+    $this->total_cold_weather = 0;
+    $this->total_max = 0;
 
-      $where =  array(
+    $where =  array(
         'species' => $species, 
         'habitat' => $habitat 
-      );
+    );
 
-      $cursor = $this->db->find($where);
-      
-      $deaths = 0;
-      $population = 0;
-      $starvation = 0;
-      $thirst = 0;
-      $age = 0;
-      $hot_weather = 0;
-      $cold_weather = 0;
+    $cursor = $this->db->find($where);
 
-      $result[$species][$habitat]["max"] = 0;
-      foreach ($cursor as $cur) { 
-        $deaths += $cur['deaths'];
-        $population += $cur['population'];
-        $result[$species][$habitat]["max"] = $cur["max_population"];
-
-        foreach ($cur['die_cause'] as $cause => $amount)  { 
-          $$cause+=$amount;
-        }
+    $result[$species][$habitat]["max"] = 0;
+    foreach ($cursor as $cur) { 
+      $this->total_deaths += $cur['deaths'];
+      $this->total_population += ($cur['offspring'] + 2); 
+      if ($cur["max_population"] > $this->total_max) { 
+        $this->total_max = $cur["max_population"];
       }
-
-      $result[$species][$habitat]["mortality"] = round(($deaths/$population)*100,2);
-      $result[$species][$habitat]["deaths"] = $deaths;
-      foreach(array_keys($this->die_cause) as $cause) { 
-        $percent = $$cause/$deaths*100;
-        $result[$species][$habitat]["cause"][$cause] = round($percent, 2); 
+      foreach ($cur['die_cause'] as $cause => $amount)  { 
+        $cause_var = "total_".$cause;
+        $this->$cause_var+=$amount;
       }
     }
-
-    return $result;
   }
 }

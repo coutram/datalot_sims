@@ -26,16 +26,16 @@ class Iteration {
     $iterations = $this->parameters->getIterations();
 
     foreach ($this->parameters->getSpecies() as $sp){ 
-      Log::instance()->output("Running for ".$sp->name);
+      Log::instance()->debug("Running for ".$sp->name);
       Stats::instance()->setSpecies($sp->name);
 
       foreach ($this->parameters->getHabitats() as $hab) { 
-        Log::instance()->output("Running for ".$hab->name);
+        Log::instance()->debug("Running for ".$hab->name);
         Stats::instance()->setHabitat($hab->name);
        
           for ($i=1;$i<=$iterations;$i++) { 
-            Log::instance()->output("Running $i Iteration");
-       
+            Log::instance()->debug("Running $i Iteration");
+            Stats::instance()->setIteration($i);
             $this->runSimulation($sp, $hab);
         }
       }

@@ -53,13 +53,13 @@ class Survive {
 
       case $this->isThirsty():
         Log::instance()->debug("Animal Died: Thirsty condition");
-        Stats::instance()->incThirsty();
+        Stats::instance()->incThirst();
         $this->survive = false;
         break;
 
       case $this->isHungry():
         Log::instance()->debug("Animal Died: Hungry condition");
-        Stats::instance()->incHungry();
+        Stats::instance()->incStarvation();
         $this->survive = false;
         break;
     }

@@ -76,7 +76,6 @@ class Export {
 
     $stats = Stats::instance()->getStats();
 
-    print_r($stats);
     foreach ($stats as $species => $species_array) { 
       $this->writeFile($species.":");
 

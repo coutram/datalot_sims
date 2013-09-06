@@ -65,11 +65,11 @@ class Herd implements Living {
     $this->water_left = $habitat_water; 
     $this->random();
     foreach ($this->get() as $animal){ 
-      if ($this->water_left > 0){ 
+      if ($this->water_left > $consumption){ 
         $this->water_left-=$consumption;
       } else { 
         $this->water_left = 0; // half eaten food -- still gets eaten
-        $animal->incrementHungry();
+        $animal->incrementThirsty();
         $water_count++;
       }
     }
@@ -86,7 +86,7 @@ class Herd implements Living {
     $this->random();
 
     foreach ($this->get() as $animal){ 
-      if ($habitat_food > $consumption){ 
+      if ($this->food_left > $consumption){ 
         $this->food_left-=$consumption;
         $animal->notHungry();
       } else { 
