@@ -54,14 +54,54 @@ class Stats extends Singleton {
    */
   protected $offspring = 0;
 
+  /**
+   * Total deaths through the iterations
+   * @var int
+   */
   protected $total_deaths = 0 ; 
+
+  /**
+   * Total population through the iterations
+   * @var int
+   */
   protected $total_population = 0;
+
+  /**
+   * Total deaths by starvation through the iterations
+   * @var int
+   */
   protected $total_starvation = 0;
+
+  /**
+   * Total deaths by thirst through the iterations
+   * @var int
+   */
   protected $total_thirst = 0;
+
+  /**
+   * Total deaths by end of life symptons through the iterations
+   * @var int
+   */
   protected $total_age = 0;
+
+  /**
+   * Total deaths by heat stroke through the iterations
+   * @var int
+   */
   protected $total_hot_weather = 0;
+
+  /**
+   * Total deaths by pneumonia through the iterations
+   * @var int
+   */
   protected $total_cold_weather = 0;
+
+  /**
+   * Total max population through the iterations
+   * @var int
+   */
   protected $total_max = 0;
+  
   /**
    * Array of details of the cause of deaths in this simulation 
    * @var array
@@ -257,6 +297,9 @@ class Stats extends Singleton {
     return $this->db->aggregate($group_by);
   }
 
+  /**
+   * Set the totals from rolling through the iteration values
+   */
   private function getIterationValues($species, $habitat) {
     //initialize vars for this run  
     $this->total_deaths = 0 ; 
