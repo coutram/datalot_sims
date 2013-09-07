@@ -42,7 +42,22 @@ Task: create an application that imports the provided YAML config file (which co
 				- The temperature should be updated for every new month and should fluctuate above/below the average by up to 5 degrees, with a 0.5% chance of having up to a 15 degree fluctuation.
 
 
+Requirements: 
 
-	Questions/Assumptions: 
+	php 5.3 
+	mongo 2.2+ 
+	php mongo driver 1.3.4+
+
+
+Questions/Assumptions: 
 	1. The initial Male and Female are a random breeding age to start
 	2. Randomly select month to start.
+	
+To Run: 
+	php simulations 
+	
+Result: 
+	cat output.txt 
+	
+Author: 
+	outram@gmail.com
