@@ -54,7 +54,7 @@ Questions/Assumptions:
 	2. Randomly select month to start.
 	
 To Run: 
-	php simulations 
+	php simulations.php
 	
 Result: 
 	cat output.txt 
