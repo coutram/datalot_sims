@@ -43,17 +43,18 @@ Task: create an application that imports the provided YAML config file (which co
 
 
 Requirements: 
-
 	php 5.3 
 	mongo 2.2+ 
 	php mongo driver 1.3.4+
-
+	
+	yum install php mongo php-mongo
 
 Questions/Assumptions: 
 	1. The initial Male and Female are a random breeding age to start
 	2. Randomly select month to start.
 	
 To Run: 
+	Run from project root
 	php simulations.php
 	
 Result: 
